@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewData["Title"] = "Paquete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    string rol = Context.Session.GetString("Rol");
+}
+@if(rol != "Administrador")
+{
+
+<h1 class="text-center">Paquetes</h1>
+
+<div class="card-group">
+    <div class="card">
+        <img src="https://thelogisticsworld.com/wp-content/uploads/2023/05/paquetes-de-amazon.jpg" class="card-img-top" alt="Cargando">
+        <div class="card-body">
+            <h5 class="card-title text-center">Generar Guia</h5>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a class="btn btn-success" href="@Url.Action("CrearPaquete", "Paquete")"><i class="bi bi-calendar2-plus"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <img src="https://s1.eestatic.com/2020/03/26/elandroidelibre/el_androide_libre_477714844_179570080_1706x960.jpg" class="card-img-top" alt="Cargando">
+        <div class="card-body">
+            <h5 class="card-title text-center">Rastrear Paquete</h5>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a class="btn btn-danger" href="@Url.Action("")"><i class="bi bi-geo-alt-fill"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <img src="https://www.unotv.com/uploads/2022/07/fugadegas-090436.jpg" class="card-img-top" alt="Cargando">
+        <div class="card-body">
+            <h5 class="card-title text-center">Reportar / Asistencia</h5>
+            <a class="btn-toolbar" href="@Url.Action("")"></a>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a class="btn btn-info" href="@Url.Action("")"><i class="bi bi-headset"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+}
+else
+{
+    @model BL.Paquete
+
+    <h1 class="text-center" style="color:deeppink">Detalle de los Paquetes</h1>
+    <br />
+    <br />
+
+    <div class="container">
+    @using(Html.BeginForm("Paquete", "Paquete", FormMethod.Post, new {enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <label style="color:deeppink"><b>Ingrese el nombre del repartidor</b></label>
+
+                    <input class="form-control me-2" name="nombre" type="search" placeholder="Nombre" aria-label="">
+        </div>
+
+        <div class="col-md-4">
+            <label style="color:deeppink"><b>Estatus</b></label>
+           
+            @Html.DropDownListFor(model => model.Entrega.EstatusEntrega.IdEstatusEntrega, new SelectList(Model.Entrega.EstatusEntrega.Objects, "IdEstatusEntrega", "Estatus"), "Selecciona el Estatus", new {@class = "form-control"})
+        </div>
+
+        </div>
+        <br />
+        <button class="btn btn-danger" type="submit">Buscar</button>
+
+    }
+
+    <br />
+    <br />
+
+   
+    
+
+        <div class="table-responsive">
+
+        <table class="table table-dark table-striped table-responsive text-center">
+            <thead class="table table-warning text-center">
+                <tr class="text-center">
+                    <th>Id Paquete</th>
+                    <th>Peso</th>
+                    <th>Detalle</th>
+                    <th>Direccion Origen</th>
+                    <th>Direccion Entrega</th>
+                    <th>Fecha Estimada de entrega</th>
+                    <th>Codigo de Rastreo</th>
+                    <th>Estatus</th>
+                    <th>IdRepartidor</th>
+                    <th>Fotografia</th>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                </tr>
+            </thead>
+
+            <tbody class="text-center">
+
+                @foreach(BL.Paquete paquete in Model.Objects)
+                {
+                <tr>
+                    <td>@paquete.IdPaquete</td>
+                    <td>@paquete.Peso</td>
+                    <td>@paquete.Detalle</td>
+                    <td>@paquete.DireccionOrigen</td>
+                    <td>@paquete.DireccionEntrega</td>
+                    <td>@paquete.FechaEstimadaEntrega</td>
+                    <td>@paquete.CodigoRastreo</td>
+                    <td>@paquete.Entrega.EstatusEntrega.Estatus</td>
+                    <td>@paquete.Entrega.Repartidor.IdRepartidor</td>
+                    <td>
+                        <img src="data:image/*;base64, @paquete.Entrega.Repartidor.Fotografia" width="50" height="50" />
+                    
+                    </td>
+                    <td>@paquete.Entrega.Repartidor.Usuario.Nombre</td>
+                    <td>@paquete.Entrega.Repartidor.Usuario.ApellidoPaterno</td>
+                    <td>@paquete.Entrega.Repartidor.Usuario.ApellidoPaterno</td>
+                </tr>
+
+                }
+            </tbody>
+
+        </table>
+
+        </div>
+
+    </div>
+
+
+    <div>
+        <a class="btn btn-danger" href="@Url.Action("")">Regresar</a>
+        <a href="@Url.Action("GenerarPdf", "Paquete")" id="btnGuardar" class="btn btn-dark"> Resumen</a>
+    </div>
+
+
+}

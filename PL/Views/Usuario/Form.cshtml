@@ -1,0 +1,65 @@
+﻿ @model BL.Usuario
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Formulario</h1>
+
+@using(Html.BeginForm("Form", "Usuario", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+
+    @Html.HiddenFor(model => model.IdUsuario)
+
+    <div class="row">
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.UserName)
+            @Html.TextBoxFor(model => model.UserName, new {@class = "form-control"})
+        </div>
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Password)
+            @Html.TextBoxFor(model => model.Password, new {@class = "form-control", @type = "password"})
+        </div>
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Email)
+            @Html.TextBoxFor(model => model.Email, new {@class = "form-control"})
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Nombre)
+            @Html.TextBoxFor(model => model.Nombre, new {@class = "form-control"})
+        </div>
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.ApellidoPaterno)
+            @Html.TextBoxFor(model => model.ApellidoPaterno, new {@class = "form-control"})
+        </div>
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.ApellidoMaterno)
+            @Html.TextBoxFor(model => model.ApellidoMaterno, new {@class = "form-control"})
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Rol.IdRol)
+            @Html.DropDownListFor(model => model.Rol.IdRol, new SelectList(Model.Rol.Roles, "IdRol", "Nombre"), "Selecciona el Rol", new {@class = "form-control"})
+        </div>
+
+    </div>
+
+    <button class="btn btn-success" type="submit">Guardar</button>
+    <a class="btn btn-danger" href="@Url.Action("Usuario","Usuario")">Regresar</a>
+
+
+}

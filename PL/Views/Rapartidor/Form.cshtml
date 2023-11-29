@@ -1,0 +1,107 @@
+﻿@model BL.Repartidor
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Formulario Repartidor</h1>
+
+<div class="container">
+
+    @using (Html.BeginForm("Form", "Rapartidor", FormMethod.Post, new { enctype = "multipart/Form-data" }))
+    {
+
+        @Html.HiddenFor(model => model.IdRepartidor)
+
+           
+
+        <div class="row">
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Telefono)
+            @Html.TextBoxFor(model => model.Telefono, new {@class = "form-control"})
+        </div>
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.FechaIngreso)
+            @Html.TextBoxFor(model => model.FechaIngreso, new {@class = "form-control"})
+        </div>
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.UnidadAsignada.IdUnidadAsignada)
+            @Html.DropDownListFor(model => model.UnidadAsignada.IdUnidadAsignada, new SelectList(Model.UnidadAsignada.Objects, "IdUnidadAsignada", "FechaSolicitud"), "Selecciona la Fecha", new {@class = "form-control"})
+        </div>
+
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Entrega.IdEntrega)
+            @Html.DropDownListFor(model => model.Entrega.IdEntrega, new SelectList(Model.Entrega.Objects, "IdEntrega", "FechaEntrega"), "Selecciona la Fecha", new {@class = "form-control"})
+        </div>
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.UnidadEntrega.IdUnidad)
+            @Html.DropDownListFor(model => model.UnidadEntrega.IdUnidad, new SelectList(Model.UnidadEntrega.Objects, "IdUnidad", "NumeroPlaca"), "Selecciona el Numero de placa", new {@class = "form-control"})
+        </div>
+
+
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Usuario.IdUsuario)
+            @Html.DropDownListFor(model => model.Usuario.IdUsuario, new SelectList(Model.Usuario.UsuariosObject, "IdUsuario", "Nombre"), "Selecciona el nombre del Usuario", new {@class = "form-control"})
+        </div>
+
+
+    </div>
+
+    @Html.HiddenFor(model => model.Fotografia)
+
+        <img id="img" src="https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg" width="50" height="50" />
+        <input id="Imagen" name="Imagen" type="file" class="form-control" onchange="ValidarImagen(), visualizarImagen(this)" />
+        <br />
+        <br />
+        <hr />
+
+        <button class="btn btn-success" type="submit">Guardar</button>
+        <a class="btn btn-danger" href="@Url.Action("GetAll", "Rapartidor")">Regresar</a>
+    
+
+}
+
+</div>
+
+<script>
+    function ValidarImagen() {
+        var extensionesPermitidas = ['jpeg', 'jpg', 'png'];
+        var extensionArchivo = document.getElementById('Fotografia').value.split('.').pop().toLowerCase();
+        var isValidFile = false; //saber si es valida o no es valida
+        for (var index in extensionesPermitidas) {
+            if (extensionArchivo === extensionesPermitidas[index]) {
+                isValidFile = true;
+                break;
+            }
+        }
+        if (!isValidFile) {
+            alert('Las extensiones permitidas son : *.' + extensionesPermitidas.join(', *.'));
+            $("#Imagen").val("")
+        }
+        return isValidFile;
+
+    }
+    function visualizarImagen(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img').attr('src', e.target.result);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+
+
+</script>
+

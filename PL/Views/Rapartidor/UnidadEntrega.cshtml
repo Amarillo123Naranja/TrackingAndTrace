@@ -1,0 +1,99 @@
+﻿@model BL.Repartidor
+@{
+    ViewData["Title"] = "UnidadEntrega";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<hr />
+<h1 class="text-center">Tu Unidad</h1>
+<br />
+
+<div class="row">
+    <h3 class="text-center">@Model.Usuario.Nombre @Model.Usuario.ApellidoPaterno @Model.Usuario.ApellidoMaterno </h3>
+
+</div>
+
+<hr />
+<br />
+<br />
+<br />
+
+<div class="container">
+
+    <div class="row">
+        <a href="#" class="btn btn-danger" onclick="Form()">Informar reporte</a>
+    </div>
+
+<div class="card mb-3">
+        <img src="https://mundocontact.com/wp-content/uploads/2021/03/electric-last-mile.jpg" class="card-img-top" alt="Cargando">
+    <div class="card-body">
+            <h5 class="card-title"><b>Id Unidad:</b> @Model.UnidadEntrega.IdUnidad</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Numero de placa:  </b>@Model.UnidadEntrega.NumeroPlaca</li>
+                <li class="list-group-item"><b>Modelo:  </b>@Model.UnidadEntrega.Modelo</li>
+                <li class="list-group-item"><b>Marca:  </b>@Model.UnidadEntrega.Marca</li>
+                <li class="list-group-item"><b>Año Fabricacion:  </b>@Model.UnidadEntrega.AñoFabricacion</li>
+            </ul>
+    </div>
+</div>
+
+</div>
+
+
+    
+
+<div class="modal fade" id="formulario">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="text-center">Reportar Unidad  @Model.UnidadEntrega.IdUnidad</h4>
+                <button type="button" id="close" class="btn btn-danger" onclick="toggleModal()">x</button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+
+                    <div class="row">
+
+                        <label for="lblEmail">Email</label>
+                        <input id="txtEmail" placeholder="Email" class="form-control" />
+                        <label for="lblDetalle">Reporte</label>
+                        <textarea placeholder="Detalla lo sucedido" class="form-control"></textarea>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer text-center">
+                <button type="submit" class="btn btn-success" onclick="Enviar()">Enviar</button>
+                <button type="button" class="btn btn-danger" onclick="toggleModal()">Cancelar</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        function toggleModal() {
+            $('#formulario').modal('toggle');
+        }
+
+        function Form() {
+            $('#formulario').modal('show');
+        }
+
+
+
+
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿@model BL.Repartidor
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Repartidores</h1>
+
+<div class="container">
+
+    <a href="@Url.Action("Form", "Rapartidor")" class="btn btn-success"><i class="bi bi-person-plus-fill"></i></i>Agregar</a>
+
+    <table class="table table-dark table-striped table-responsive text-center">
+        <thead class="table table-warning text-center">
+            <tr class="text-center">
+                <th>Id Repartidor</th>
+                <th>Fotografia</th>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Mi unidad</th>
+                <th>Telefono</th>
+                <th>Fecha de Ingreso</th>
+                <th>Actualizar</th>
+                <th>Eliminar</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @foreach(BL.Repartidor repartidor in Model.Objects)
+            {
+               <tr>
+                   <td>@repartidor.IdRepartidor</td>
+                   <td>
+                        @if (repartidor.Fotografia == "" || repartidor.Fotografia == null)
+                        {
+                            <img src="https://img.freepik.com/vector-premium/icono-marco-fotos-foto-vacia-blanco-vector-sobre-fondo-transparente-aislado-eps-10_399089-1290.jpg" width="50" height="50" />
+                        }
+                        else
+                        {
+                            <img src="data:image/*;base64, @repartidor.Fotografia" width="50" height="50" />
+                        }
+                    </td>
+                   <td>@repartidor.Usuario.Nombre</td>
+                   <td>@repartidor.Usuario.ApellidoPaterno</td>
+                   <td>@repartidor.Usuario.ApellidoMaterno</td>
+                    <td><a class="btn btn-info" href="@Url.Action("UnidadAsignada", "Rapartidor", new {IdRepartidor = repartidor.IdRepartidor})"><i class="bi bi-box2-heart"></i></a></td>
+                   <td>@repartidor.Telefono</td>
+                   <td>@repartidor.FechaIngreso</td>
+                    <td><a class="btn btn-warning" href="@Url.Action("Form", "Rapartidor", new {IdRepartidor = repartidor.IdRepartidor})"><i class="bi bi-person-up"></i></a></td>
+                    <td><a class="btn btn-danger" href="@Url.Action("Delete", "Rapartidor", new {IdRepartidor = repartidor.IdRepartidor})"><i class="bi bi-x-lg"></i></a></td>
+               </tr> 
+            }
+
+
+
+        </tbody>
+
+
+    </table>
+
+
+</div>
+

@@ -1,0 +1,249 @@
+﻿@model BL.Paquete
+@{
+    ViewData["Title"] = "CrearPaquete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<style>
+    #map {
+
+        height: 300px;
+        width: 100%;
+    }
+
+    #mapita{
+        height: 300px;
+        width: 100%;
+    }
+
+  
+</style>
+
+<script>
+    (g => { var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document, b = window; b = b[c] || (b[c] = {}); var d = b.maps || (b.maps = {}), r = new Set, e = new URLSearchParams, u = () => h || (h = new Promise(async (f, n) => { await (a = m.createElement("script")); e.set("libraries", [...r] + ""); for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]); e.set("callback", c + ".maps." + q); a.src = `https://maps.${c}apis.com/maps/api/js?` + e; d[q] = f; a.onerror = () => h = n(Error(p + " could not load.")); a.nonce = m.querySelector("script[nonce]")?.nonce || ""; m.head.append(a) })); d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n)) })({
+        key: "AIzaSyCSKBDdPPlfca_zTwyxKiicRQn1qfgRjLw",
+    });
+</script>
+
+<h1 class="text-center">Crear Paquete</h1>
+<br />
+
+
+
+@using(Html.BeginForm("CrearPaquete", "Paquete", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    
+    @Html.HiddenFor(model => model.IdPaquete)
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Detalle)
+            @Html.TextBoxFor(model => model.Detalle, new {@class = "form-control"})
+        </div>
+        <br>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Peso)
+            @Html.TextBoxFor(model => model.Peso, new {@class = "form-control"})
+        </div>
+        <br>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Entrega.IdEntrega)
+            @Html.DropDownListFor(model => model.Entrega.IdEntrega, new SelectList(Model.Entrega.Objects, "IdEntrega", "FechaEntrega"), "Selecciona la fecha", new {@class = "form-control"})
+        </div>
+        <br>
+    </div>
+        <br>
+        <br>
+        <div class="row">
+        <div class="col-md-4">
+            <label class="text-center">Email</label>
+            <input class="form-control" name="email"/>
+        </div>
+       @* <div class="col-md-4 text-center">
+            @Html.LabelFor(model => model.DireccionOrigen)
+            @Html.TextBoxFor(model => model.DireccionOrigen, new {@class = "form-control"})
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.DireccionEntrega)
+            @Html.TextBoxFor(model => model.DireccionEntrega, new {@class = "form-control"})
+        </div>*@
+    </div>
+    <br />
+    <br />
+    <br />
+
+
+
+    <h4 class="text-center">Ingresa la direccion Origen</h4>
+    <br />
+    <br />
+    <br />
+    <div class="row text-center">
+    <div class="col-md-4 text-center">
+        @Html.LabelFor(model => model.DireccionOrigen)
+        @Html.TextBoxFor(model => model.DireccionOrigen, new {@class = "form-control"})
+    </div>
+    </div>
+    <br />
+    <br />
+    <!--Aqui va el mapa -->
+    <div id="map"></div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <h4 class="text-center">Ingresa la direccion de entrega</h4>
+    <br />
+    <br />
+    <div class="row text-center">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.DireccionEntrega)
+            @Html.TextBoxFor(model => model.DireccionEntrega, new {@class = "form-control"})
+        </div>
+        </div>
+        <br />
+        <br />
+    <!--Aqui va el mapita -->
+    <div id="mapita"></div>
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <button type="submit" class="btn btn-success">Registar</button>
+    </div>
+    <div class="row">
+        <a class="btn btn-danger" href="@Url.Action("Paquete", "Paquete")">Regresar</a>
+    </div>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        let mapita;
+        let map;
+        let marker;
+        let markero;
+        var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+
+        //Primer Mapa Direccion Origen
+        async function initMap() {
+            const position = { lat: 19.43057908889617, lng: -99.16173851534197 };
+            const { Map } = await google.maps.importLibrary("maps");
+            
+           
+
+            map = new Map(document.getElementById("map"), {
+                zoom: 10,
+                center: position,
+                mapId: "DEMO_MAP_ID",
+            });
+
+            //markero = new google.maps.Marker({
+            //    position: position,
+            //    map,
+            //    title: "Hello World!",
+            //});
+
+
+            //
+
+            //var geocodes = new google.maps.Geocoder();
+            //geocodes.geocode({ 
+            //    'address': position }, 
+            //  function (results, status) {
+            //    if (status == google.maps.GeocoderStatus.OK) {
+            //        pos = { lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng() };
+            //        markero = new google.maps.Marker({
+            //            position: pos,
+            //            map,
+            //            title: "Hello World!",
+            //        });
+            //    }
+
+            //});
+
+           //
+
+            //Obtener direccion
+            google.maps.event.addListener(map, 'click', function (event) {
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'latLng': event.latLng
+                }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            
+                            $("#DireccionOrigen").val(results[0].formatted_address);
+   
+                            if (marker) {
+                                marker.setPosition(event.latLng);
+                            }
+                            else {
+                                marker = new google.maps.Marker({
+                                    position: event.latLng,
+                                    map: map,
+                                  
+                                });
+                            }
+                        }
+                        
+                    }
+                });
+            });
+}
+
+        //Segundo mapa Direccion Entrega
+
+        async function initMapita() {
+            const position = { lat: 19.43057908889617, lng: -99.16173851534197 };
+            const { Map } = await google.maps.importLibrary("maps");
+
+
+
+            mapita = new Map(document.getElementById("mapita"), {
+                zoom: 10,
+                center: position,
+                mapId: "DEMO",
+            });
+
+
+            //Obtener direccion
+            google.maps.event.addListener(mapita, 'click', function (event) {
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'latLng': event.latLng
+                }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[0]) {
+                            $("#DireccionEntrega").val(results[0].formatted_address);
+
+                            if (markero) {
+                                markero.setPosition(event.latLng);
+                            }
+                            else {
+                                markero = new google.maps.Marker({
+                                    position: event.latLng,
+                                    map: mapita,
+
+                                });
+                            }
+                        }
+                    }
+                });
+            });
+
+        }
+        initMap();
+        initMapita();
+
+
+
+
+    </script>
+}
+
+
+
+

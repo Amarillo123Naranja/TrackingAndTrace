@@ -1,0 +1,46 @@
+﻿@model BL.Paquete
+@{
+    ViewData["Title"] = "CodigoRastreo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Status Paquete</h1>
+
+<div class="container">
+    <table class="table table-dark table-striped table-responsive text-center">
+        <thead class="table table-warning text-center">
+            <tr class="tex-center">
+                <th>Id Paquete</th>
+                <th>Detalle</th>
+                <th>Peso</th>
+                <th>Direccion Origen</th>
+                <th>Direccion Entrega</th>
+                <th>Fecha Estimada de Entrega</th>
+                <th>Codigo de Rastreo</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            
+                <tr class="text-center">
+                    <td>@Model.IdPaquete</td>
+                    <td>@Model.Detalle</td>
+                    <td>@Model.Peso</td>
+                    <td>@Model.DireccionOrigen</td>
+                    <td>@Model.DireccionEntrega</td>
+                    <td>@Model.FechaEstimadaEntrega)</td>
+                    <td>@Model.CodigoRastreo</td>
+
+                </tr>
+                
+            
+
+        </tbody>
+
+    </table>
+
+
+
+
+
+</div>

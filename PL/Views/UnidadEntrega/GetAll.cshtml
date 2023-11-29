@@ -1,0 +1,98 @@
+﻿@model BL.UnidadEntrega
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<hr />
+<h1 class="text-center">Unidades de Entrega</h1>
+<hr />
+<br />
+<br />
+<br />
+
+
+<div class="container">
+   <div class="row">
+    @foreach (BL.UnidadEntrega unidad in Model.Objects)
+    {
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                    <img src="https://static.vecteezy.com/system/resources/previews/022/940/078/non_2x/delivery-courier-van-truck-car-vector.jpg" class="card-img-top" alt="Hola">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Id Unidad:  </b>@unidad.IdUnidad</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Numero de Placa:  </b>@unidad.NumeroPlaca</li>
+                    <li class="list-group-item"><b>Modelo:  </b>@unidad.Modelo</li>
+                    <li class="list-group-item"><b>Marca:  </b>@unidad.Marca</li>
+                    <li class="list-group-item"><b>Año de fabricacion:  </b>@unidad.AñoFabricacion</li>
+                    <li class="list-group-item"><b>Estatus:  </b>@unidad.EstatusUnidad.Estatus</li>
+
+                </ul>
+                <div class="card-body">
+                    <a href="#" class="btn btn-danger" onclick="Form()">Reportar</a>
+                    <a href="#" class="btn btn-warning">Estatus</a>
+                    <br />
+                    <hr />
+                    <br />
+                </div>
+            </div>
+        </div>
+       
+    }
+    </div>
+</div>
+
+<div class="modal fade" id="formulario">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="text-center">Reportar Unidad</h4>
+                <button type="button" id="close" class="btn btn-danger" onclick="toggleModal()">x</button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+
+                    <div class="row">
+                    <label for="lblIdUnidad">Id Unidad</label>
+                    <input type="text" id="txtIdUnidad" disabled />
+                    </div>
+
+                    <div class="row">
+                    <label for="lblDetalle">Reporte</label>
+                    <textarea placeholder="Detalla lo sucedido"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="Enviar()">Enviar Reporte</button>
+                <button type="button" class="btn btn-danger" id="btnCancelar">PDF</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        function toggleModal(){
+            $('#formulario').modal('toggle');
+        }
+
+        function Form() {
+            $('#formulario').modal('show');
+        }
+
+
+
+    </script>
+}

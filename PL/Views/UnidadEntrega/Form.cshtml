@@ -1,0 +1,61 @@
+﻿@model BL.UnidadEntrega
+@{
+    ViewData["Title"] = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center">Formulario Unidad</h1>
+
+<hr />
+
+<div class="container">
+
+    @using(Html.BeginForm("Form", "UnidadEntrega", FormMethod.Post, new {enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.IdUnidad)
+
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.NumeroPlaca)
+                @Html.TextBoxFor(model => model.NumeroPlaca, new{@class = "form-control"})
+                </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Modelo)
+                @Html.TextBoxFor(model => model.Modelo, new {@class = "form-control"})
+            </div>
+
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Marca)
+                @Html.TextBoxFor(model => model.Marca, new {@class = "form-control"})
+            </div>
+
+
+            </div>
+
+
+        <div class="row">
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.AñoFabricacion)
+                @Html.TextBoxFor(model => model.AñoFabricacion, new {@class = "form-control"})
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.EstatusUnidad.IdEstatusUnidad)
+                @Html.DropDownListFor(model => model.EstatusUnidad.IdEstatusUnidad, new SelectList(Model.EstatusUnidad.Objects, "IdEstatusUnidad", "Estatus"), "Selecciona el estatus", new {@class = "form-control"})
+            </div>
+
+        </div>
+
+
+
+        <button class="btn btn-success" type="submit">Guardar</button>
+        <a class="btn btn-danger" href="@Url.Action("GetAll", "UnidadEntrega")">Regresar</a>
+
+    
+        
+    }
+
+</div>
+

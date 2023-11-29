@@ -1,0 +1,104 @@
+﻿@model BL.Repartidor
+@{
+    ViewData["Title"] = "UnidadAsignada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<hr />
+<h1 class="text-center">Tu Unidad</h1>
+<br />
+<br />
+<br />
+
+<div class="row">
+        <h3 class="text-center">@Model.Usuario.Nombre @Model.Usuario.ApellidoPaterno @Model.Usuario.ApellidoMaterno </h3>
+   
+</div>
+
+<hr />
+<br />
+<br />
+<br />
+
+
+<div class="container">
+
+    <div class="row">
+        <a href="#" class="btn btn-danger" onclick="Form()">Informar reporte</a>
+    </div>
+
+    <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="https://static.vecteezy.com/system/resources/previews/022/940/078/non_2x/delivery-courier-van-truck-car-vector.jpg" class="card-img-top" alt="Hola">
+                    <div class="card-body">
+                        <h5 class="card-title text-center"><b>Id Unidad:  </b>@Model.UnidadEntrega.IdUnidad</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Numero de Placa:  </b>@Model.UnidadEntrega.NumeroPlaca</li>
+                        <li class="list-group-item"><b>Modelo:  </b>@Model.UnidadEntrega.Modelo</li>
+                        <li class="list-group-item"><b>Marca:  </b>@Model.UnidadEntrega.Marca</li>
+                    </ul>
+                </div>
+            </div>      
+    </div>
+
+    
+</div>
+
+<div class="modal fade" id="formulario">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="text-center">Reportar Unidad  @Model.UnidadEntrega.IdUnidad</h4>
+                <button type="button" id="close" class="btn btn-danger" onclick="toggleModal()">x</button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+
+                    <div class="row">
+                       
+                        <label for="lblEmail">Email</label>
+                        <input id="txtEmail" placeholder="Email" class="form-control"/>   
+                        <label for="lblDetalle">Reporte</label>
+                        <textarea placeholder="Detalla lo sucedido" class="form-control"></textarea>
+                      
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer text-center">
+                <button type="submit" class="btn btn-success" onclick="Enviar()">Enviar</button>
+                <button type="button" class="btn btn-danger" onclick="toggleModal()">Cancelar</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        function toggleModal() {
+            $('#formulario').modal('toggle');
+        }
+
+        function Form() {
+            $('#formulario').modal('show');
+        }
+
+
+
+
+    </script>
+}

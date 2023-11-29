@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>INICIO DE SESION</h1>
+
+<div class="container">
+    @using (Html.BeginForm("Login", "Login", FormMethod.Post, new {enctype = "multipart/form-data"}))
+    {
+        <br />
+        <br />
+        <br />
+        <input name="email" type="text" placeholder="Email*"/>
+        <input name="password" type="password" placeholder="Password*"/>
+        <br />
+        <br />
+        <br />
+        <button class="btn btn-warning" type="submit">Iniciar</button>
+        <a class="btn btn-danger" href="@Url.Action("Usuario", "Usuario")">Regresar</a>
+        
+    }
+
+</div>
+
